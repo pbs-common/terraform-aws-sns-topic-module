@@ -8,14 +8,12 @@ import (
 )
 
 func getAWSAccountID(t *testing.T) string {
-	sess, err := session.NewSessionWithOptions(session.Options{
-		SharedConfigState: session.SharedConfigEnable,
-	})
+	session, err := session.NewSession()
 	if err != nil {
 		t.Fatalf("Failed to create AWS session: %v", err)
 		return ""
 	}
-	svc := sts.New(sess)
+	svc := sts.New(session)
 	result, err := svc.GetCallerIdentity(&sts.GetCallerIdentityInput{})
 	if err != nil {
 		t.Fatalf("Failed to get AWS Account ID: %v", err)
@@ -25,12 +23,10 @@ func getAWSAccountID(t *testing.T) string {
 }
 
 func getAWSRegion(t *testing.T) string {
-	sess, err := session.NewSessionWithOptions(session.Options{
-		SharedConfigState: session.SharedConfigEnable,
-	})
+	session, err := session.NewSession()
 	if err != nil {
 		t.Fatalf("Failed to create AWS session: %v", err)
 		return ""
 	}
-	return *sess.Config.Region
+	return *session.Config.Region
 }
