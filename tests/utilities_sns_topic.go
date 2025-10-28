@@ -16,6 +16,7 @@ func testSNSTopic(t *testing.T, variant string) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 		LockTimeout:  "5m",
+		Upgrade:      true,
 	}
 
 	defer terraform.Destroy(t, terraformOptions)
